@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from users.views import UserCreateView, UserRetrieveDeleteDestroyView
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
+    path('user', UserCreateView.as_view()),
+    path('user/<int:pk>', UserRetrieveDeleteDestroyView.as_view())
 ]
