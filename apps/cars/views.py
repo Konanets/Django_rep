@@ -23,8 +23,10 @@ from .serializers import CarSerializer
 class CarListCreateView(APIView):
     def get(self, *args, **kwargs):
         cars = CarModel.objects.all()
-        serializer = CarSerializer(cars, many=True, partial=True)
-        return Response(serializer.data, status.HTTP_200_OK)
+        serializer = CarSerializer(cars, many=True)
+        return Response(
+            [{key: value for key, value in item.items() if key in ('mark', 'id', 'year')} for item in serializer.data],
+            status.HTTP_200_OK)
 
     def post(self, *args, **kwargs):
         data = self.request.data
