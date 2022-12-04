@@ -1,4 +1,5 @@
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import AllowAny
 
 from .models import CarModel
 from .serializers import CarSerializer

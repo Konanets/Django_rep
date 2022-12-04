@@ -1,21 +1,28 @@
-from rest_framework.generics import ListCreateAPIView, GenericAPIView
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.generics import GenericAPIView, ListAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+
+from apps.cars.models import CarModel
+from apps.cars.serializers import CarSerializer
 
 from .models import AutoParksModel
 from .serializers import AutoParkSerializer
-from apps.cars.models import CarModel
-
-from apps.cars.serializers import CarSerializer
 
 
-class AutoParkListCreateView(ListCreateAPIView):
+class AutoParkListCreateView(ListAPIView):
     queryset = AutoParksModel.objects.all()
     serializer_class = AutoParkSerializer
+    permission_classes = AllowAny,
 
 
 class AddCarToAutoParkView(GenericAPIView):
     queryset = AutoParksModel.objects.all()
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return AllowAny(),
+        return IsAuthenticated(),
 
     def get(self, *args, **kwargs):
         pk = kwargs.get('pk')
