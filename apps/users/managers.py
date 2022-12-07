@@ -3,8 +3,6 @@ from django.contrib.auth.base_user import BaseUserManager
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_kwargs):
-        extra_kwargs['is_active'] = False
-
         if not email:
             raise ValueError('The email must be set')
         email = self.normalize_email(email)
@@ -14,9 +12,9 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password, **extra_kwargs):
-        extra_kwargs['is_active'] = True
-        extra_kwargs['is_superuser'] = True
-        extra_kwargs['is_staff'] = True
+        extra_kwargs.setdefault('is_active', True)
+        extra_kwargs.setdefault('is_superuser', True)
+        extra_kwargs.setdefault('is_staff', True)
 
         if not extra_kwargs['is_staff']:
             raise ValueError('is_staff must be True')
