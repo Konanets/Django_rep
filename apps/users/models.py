@@ -30,4 +30,3 @@ class ProfileModel(models.Model):
     age = models.IntegerField(validators=[V.MinValueValidator(18), V.MaxValueValidator(150)])
     phone = models.CharField(max_length=10)
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')
-    photo = models.FileField()
