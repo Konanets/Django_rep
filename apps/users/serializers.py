@@ -42,3 +42,10 @@ class UserSerializer(ModelSerializer):
         profile = validated_data.pop('profile')
         user = UserModel.objects.create_user(**validated_data)
         ProfileModel.objects.create(**profile, user=user)
+        return user
+
+
+class AvatarSerializer(ModelSerializer):
+    class Meta:
+        model = ProfileModel
+        fields = ("avatar",)

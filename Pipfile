@@ -8,6 +8,8 @@ django = "*"
 djangorestframework = "*"
 mysqlclient = "*"
 djangorestframework-simplejwt = "*"
+pillow = "*"
+django-dotenv = "*"
 
 [dev-packages]
 isort = "*"
