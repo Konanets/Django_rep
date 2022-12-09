@@ -11,6 +11,7 @@ from apps.users.models import UserModel as User
 from .models import ProfileModel, UserModel
 
 UserModel: Type[User] = get_user_model()
+from core.services.email_service import EmailService
 
 
 class ProfileSerializer(ModelSerializer):
@@ -42,7 +43,9 @@ class UserSerializer(ModelSerializer):
         profile = validated_data.pop('profile')
         user = UserModel.objects.create_user(**validated_data)
         ProfileModel.objects.create(**profile, user=user)
+        EmailService.register_email(user)
         return user
+
 
 
 class AvatarSerializer(ModelSerializer):

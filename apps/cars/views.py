@@ -1,8 +1,10 @@
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView
 from rest_framework.permissions import AllowAny
 
-from .models import CarModel
-from .serializers import CarSerializer
+from .models import CarModel, CarsPhotoModel
+from .serializers import CarSerializer, CarPhotoSerializer
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class CarListCreateView(ListAPIView):
@@ -19,3 +21,17 @@ class CarListCreateView(ListAPIView):
 class CarRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     serializer_class = CarSerializer
     queryset = CarModel.objects.all()
+
+
+class CarPhotoUpdateView(GenericAPIView):
+    queryset = CarModel.objects.all()
+
+    def post(self, *args, **kwargs):
+        files = self.request.FILES
+        car = self.get_object()
+        for key in files:
+            serializer = CarPhotoSerializer(data={'photo': files[key]})
+            serializer.is_valid(raise_exception=True)
+            serializer.save(car=car)
+        serializer = CarSerializer(car)
+        return Response(serializer.data, status.HTTP_201_CREATED)
