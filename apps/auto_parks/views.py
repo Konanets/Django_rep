@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from apps.cars.models import CarModel
 from apps.cars.serializers import CarSerializer
 
+from .filters import AutoParkFilter
 from .models import AutoParksModel
 from .serializers import AutoParkSerializer
 
@@ -18,6 +19,7 @@ class AutoParkListCreateView(ListAPIView):
 
 class AddCarToAutoParkView(GenericAPIView):
     queryset = AutoParksModel.objects.all()
+    filterset_class = AutoParkFilter
 
     def get_permissions(self):
         if self.request.method == 'GET':

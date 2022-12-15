@@ -1,15 +1,20 @@
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView
-from rest_framework.permissions import AllowAny
+from core.paginations.page_pagination import PagePagination
 
-from .models import CarModel, CarsPhotoModel
-from .serializers import CarSerializer, CarPhotoSerializer
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+
+from .filters import CarFilter
+from .models import CarModel, CarsPhotoModel
+from .serializers import CarPhotoSerializer, CarSerializer
 
 
-class CarListCreateView(ListAPIView):
+class CarListView(ListAPIView):
     serializer_class = CarSerializer
     queryset = CarModel.objects.all()
+    pagination_class = PagePagination
+    filterset_class = CarFilter
 
     def get_queryset(self):
         if (auto_park_id := self.request.query_params.dict().get('auto_park_id')) and auto_park_id.isdigit():
@@ -20,7 +25,7 @@ class CarListCreateView(ListAPIView):
 
 class CarRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     serializer_class = CarSerializer
-    queryset = CarModel.objects.all()
+    queryset = CarModel.objects.all().
 
 
 class CarPhotoUpdateView(GenericAPIView):

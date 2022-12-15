@@ -1,8 +1,8 @@
 from django.db import models
 
 from apps.auto_parks.models import AutoParksModel
-from .services import upload_photo
 
+from .services import upload_photo
 
 # Create your models here.
 
@@ -11,6 +11,7 @@ class CarModel(models.Model):
     class Meta:
         db_table = 'cars'
 
+    price = models.IntegerField()
     mark = models.CharField(max_length=25)
     year = models.IntegerField()
     seats = models.IntegerField()

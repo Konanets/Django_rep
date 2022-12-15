@@ -45,11 +45,11 @@ class ChangePasswordView(GenericAPIView):
     permission_classes = (AllowAny,)
 
     def post(self, *args, **kwargs):
-        token = self.kwargs.get('token')
-        user = JWTService.validate_token(token, ResetPasswordViaEmailToken)
         data = self.request.data
         serializer = PasswordSerializer(data=data)
         serializer.is_valid(raise_exception=True)
+        token = self.kwargs.get('token')
+        user = JWTService.validate_token(token, ResetPasswordViaEmailToken)
         user.set_password(serializer.data.get('password'))
         user.save()
         return Response(status=status.HTTP_200_OK)
