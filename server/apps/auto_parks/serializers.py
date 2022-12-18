@@ -10,4 +10,4 @@ class AutoParkSerializer(ModelSerializer):
 
     class Meta:
         model = AutoParksModel
-        exclude = ('owner',)
+        fields = ('id', 'name', 'cars', 'owner')

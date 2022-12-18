@@ -25,7 +25,7 @@ class CarListView(ListAPIView):
 
 class CarRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     serializer_class = CarSerializer
-    queryset = CarModel.objects.all().
+    queryset = CarModel.objects.all()
 
 
 class CarPhotoUpdateView(GenericAPIView):

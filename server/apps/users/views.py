@@ -25,17 +25,23 @@ class UserCreateView(CreateAPIView):
 
 
 class AddAutoParkView(GenericAPIView):
+
+    def get_object(self):
+        return self.request.user
+
     def get(self, *args, **kwargs):
         auto_parks = AutoParksModel.objects.filter(owner_id=self.request.user.pk)
         serializer = AutoParkSerializer(auto_parks, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
     def post(self, *args, **kwargs):
-        user = self.request.user
         data = self.request.data
         serializer = AutoParkSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(owner=user)
+        user = self.get_object()
+        auto_park: AutoParksModel = serializer.save()
+        auto_park.owner.add(user)
+        serializer = UserSerializer(user)
         return Response(serializer.data, status.HTTP_201_CREATED)
 
 

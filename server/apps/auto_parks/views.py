@@ -15,11 +15,11 @@ class AutoParkListCreateView(ListAPIView):
     queryset = AutoParksModel.objects.all()
     serializer_class = AutoParkSerializer
     permission_classes = AllowAny,
-
+    filterset_class = AutoParkFilter
 
 class AddCarToAutoParkView(GenericAPIView):
     queryset = AutoParksModel.objects.all()
-    filterset_class = AutoParkFilter
+
 
     def get_permissions(self):
         if self.request.method == 'GET':

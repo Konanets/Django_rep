@@ -4,13 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
 djangorestframework = "*"
 mysqlclient = "*"
+django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
-django-dotenv = "*"
-activate = "*"
 django-filter = "*"
 
 [dev-packages]
@@ -18,4 +16,3 @@ isort = "*"
 
 [requires]
 python_version = "3.11"
-python_full_version = "3.11.0"

@@ -7,11 +7,11 @@ from rest_framework.serializers import ModelSerializer
 
 from apps.auto_parks.serializers import AutoParkSerializer
 from apps.users.models import UserModel as User
-
+from core.services.email_service import EmailService
 from .models import ProfileModel, UserModel
 
 UserModel: Type[User] = get_user_model()
-from core.services.email_service import EmailService
+
 
 
 class ProfileSerializer(ModelSerializer):
@@ -45,7 +45,6 @@ class UserSerializer(ModelSerializer):
         ProfileModel.objects.create(**profile, user=user)
         EmailService.register_email(user)
         return user
-
 
 
 class AvatarSerializer(ModelSerializer):
