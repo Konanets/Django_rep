@@ -11,7 +11,7 @@ from .views import (
 )
 
 urlpatterns = [
-    path('', UserCreateView.as_view()),
+    path('', UserCreateView.as_view(), name='user_create'),
     path('/auto_parks', AddAutoParkView.as_view()),
     path('/<int:pk>/activate', UserActivateView.as_view()),
     path('/<int:pk>/deactivate', UserDeactivateView.as_view()),
